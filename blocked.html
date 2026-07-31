@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Access Denied</title>
+<link rel="stylesheet" href="blocked.css">
+</head>
+
+<body>
+
+<div class="card">
+
+<h1>🔒 Access Denied</h1>
+
+<p>
+Only Google Flow AI is allowed.
+</p>
+
+<button id="flowBtn">
+Open Flow AI
+</button>
+
+</div>
+
+<script>
+document.getElementById("flowBtn").onclick = function () {
+    window.location.href = "https://labs.google/fx/tools/flow";
+};
+</script>
+
+</body>
+</html>
