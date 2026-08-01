@@ -1,59 +1,33 @@
-const status =
-document.getElementById("status");
+const status = document.getElementById("status");
 
+chrome.storage.local.get(["loggedIn","currentUser"], (result) => {
 
-chrome.storage.local.get(
-["loggedIn"],
-(result)=>{
+    if(result.loggedIn){
 
+        status.textContent =
+        "Logged in: " + result.currentUser.username;
 
-if(result.loggedIn){
+    }else{
 
-status.textContent =
-"✅ Logged In";
+        status.textContent =
+        "Not Logged In";
 
-}else{
-
-status.textContent =
-"❌ Not Logged In";
-
-}
-
+    }
 
 });
 
+document.getElementById("openFlow").onclick = ()=>{
 
-document
-.getElementById("openFlow")
-.onclick=()=>{
-
-chrome.tabs.create({
-
-url:
-"https://labs.google/fx/tools/flow"
-
-});
+    chrome.tabs.create({
+        url:"https://labs.google/fx/tools/flow"
+    });
 
 };
 
+document.getElementById("logout").onclick = ()=>{
 
-
-document
-.getElementById("logout")
-.onclick=()=>{
-
-
-chrome.storage.local.set({
-
-loggedIn:false,
-loginTime:null
-
-},()=>{
-
-status.textContent =
-"Logged Out";
-
-});
-
+    chrome.storage.local.clear(()=>{
+        status.textContent="Logged Out";
+    });
 
 };
