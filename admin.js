@@ -58,17 +58,27 @@ document.getElementById("save")
 
     }
 
-    await DB.addUser({
-
-        username,
-
-        password,
-
-        role
-
-    });
-
-    loadUsers();
+  await DB.addUser({
+    id: Date.now(),
+    username,
+    password,
+    role,
+    permissions: {
+        gmail: false,
+        drive: false,
+        youtube: false,
+        chatgpt: false,
+        maps: false,
+        photos: false,
+        calendar: false,
+        meet: false,
+        translate: false,
+        news: false,
+        account: false,
+        gemini: true,
+        flow: true
+    }
+});
 
 };
 
