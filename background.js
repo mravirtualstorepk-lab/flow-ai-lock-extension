@@ -1,49 +1,37 @@
-const ALLOWED_HOSTS = [
-  "labs.google",
-  "accounts.google.com",
-  "googleapis.com",
-  "gstatic.com",
-  "googleusercontent.com"
+const BLOCKED_HOSTS = [
+  "mail.google.com",
+  "drive.google.com",
+  "maps.google.com",
+  "www.google.com",
+  "calendar.google.com",
+  "news.google.com",
+  "photos.google.com",
+  "meet.google.com",
+  "translate.google.com",
+  "myaccount.google.com"
+  "youtube.com"
+"chatgpt.com"
+
+
 ];
 
-const FLOW_URL = "https://labs.google/fx/tools/flow";
-
-function isAllowedHost(hostname) {
-  return ALLOWED_HOSTS.some(domain =>
-    hostname === domain || hostname.endsWith("." + domain)
-  );
-}
-
-chrome.webNavigation.onBeforeNavigate.addListener(async (details) => {
-  // صرف مین فریم پر عمل کریں
+chrome.webNavigation.onBeforeNavigate.addListener((details) => {
   if (details.frameId !== 0) return;
-
-  const { loggedIn } = await chrome.storage.local.get(["loggedIn"]);
-
-  // اگر لاگ ان نہیں ہے تو login.html کھولیں
-  if (!loggedIn) {
-    chrome.tabs.update(details.tabId, {
-      url: chrome.runtime.getURL("login.html")
-    });
-    return;
-  }
 
   const url = new URL(details.url);
 
-  // اجازت یافتہ ڈومین
-  if (isAllowedHost(url.hostname)) {
+  // Gemini اور Flow AI ہمیشہ Allow
+  if (
+    url.hostname === "gemini.google.com" ||
+    (url.hostname === "labs.google" &&
+     url.pathname.startsWith("/fx/tools/flow"))
+  ) {
     return;
   }
 
-  // باقی سب بلاک
-  chrome.tabs.update(details.tabId, {
-    url: chrome.runtime.getURL("blocked.html")
-  });
-});
-
-// ایکسٹینشن انسٹال ہونے پر Flow AI کھولیں
-chrome.runtime.onInstalled.addListener(() => {
-  chrome.tabs.create({
-    url: FLOW_URL
-  });
+  if (BLOCKED_HOSTS.includes(url.hostname)) {
+    chrome.tabs.update(details.tabId, {
+      url: chrome.runtime.getURL("blocked.html")
+    });
+  }
 });
