@@ -1,11 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flow AI Lock - Admin Panel</title>
+
+<link rel="stylesheet" href="blocked.css">
+
+<style>
+.user-card{
+    border:1px solid #ddd;
+    border-radius:8px;
+    padding:10px;
+    margin:10px 0;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.delete-btn{
+    background:#d93025;
+    color:#fff;
+    border:none;
+    padding:8px 15px;
+    border-radius:5px;
+    cursor:pointer;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="card">
+
+<h2>👨‍💼 Admin Panel</h2>
+
+<input id="username" type="text" placeholder="Username">
+
+<br><br>
+
+<input id="password" type="password" placeholder="Password">
+
+<br><br>
+
+<select id="role">
+
+<option value="user">User</option>
+
+<option value="admin">Admin</option>
+
+</select>
+
+<br><br>
+
+<button id="save">
+
 Add User
 
-Username
+</button>
 
-Password
+<hr>
 
-Role
+<h3>Users</h3>
 
-(Admin/User)
+<div id="users"></div>
 
-[Save]
+</div>
+
+<script src="database.js"></script>
+
+<script src="admin.js"></script>
+
+</body>
+</html>
